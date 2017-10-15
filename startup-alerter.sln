@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "startup-alerter", "startup-alerter.csproj", "{6F70CACE-8609-4F51-85A8-1B87FA3A5F6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "startup-alerter", "startup-alerter\startup-alerter.csproj", "{6F70CACE-8609-4F51-85A8-1B87FA3A5F6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "startup-alterter.unittests", "..\startup-alterter.unittests\startup-alterter.unittests.csproj", "{F26A5381-7616-4903-8AFD-AF001141FB56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "startup-alterter.unittests", "startup-alterter.unittests\startup-alterter.unittests.csproj", "{F26A5381-7616-4903-8AFD-AF001141FB56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
