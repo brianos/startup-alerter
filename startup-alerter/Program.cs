@@ -1,9 +1,13 @@
 ﻿using log4net;
 using System;
 using System.Configuration;
+using System.Net;
+using System.Linq;
+using System.Text;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+
 
 namespace startup_alerter
 {
@@ -17,6 +21,8 @@ namespace startup_alerter
             log.Info("app start");
 
             var startUpAlertData = GetStartUpAlertData();
+            log.Info("alert: " + startUpAlertData.Body);
+
             var createMessageOptions = GetCreateMessageOptions(startUpAlertData);
             ConfigureRestClient(startUpAlertData);
             SendStartUpAlert(createMessageOptions);
@@ -30,8 +36,23 @@ namespace startup_alerter
             var authToken = ConfigurationManager.AppSettings["authToken"];
             var toNumber = ConfigurationManager.AppSettings["toNumber"];
             var fromNumber = ConfigurationManager.AppSettings["fromNumber"];
-            var body = "StartUp: " + DateTime.Now;
-            return new StartUpAlertData(accountSid, authToken, fromNumber, toNumber, body);
+
+            var body = new StringBuilder();
+            body.AppendLine("StartUp: " + DateTime.Now);
+            body.Append("IP: " + GetIpAddress());
+
+            return new StartUpAlertData(accountSid, authToken, fromNumber, toNumber, body.ToString());
+        }
+
+        private static string GetIpAddress()
+        {
+            string hostname = Dns.GetHostName();
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(hostname);
+            IPAddress ipAddress = ipHostInfo.AddressList
+                                            .FirstOrDefault(
+                                                a => a.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+
+            return ipAddress.ToString();
         }
 
         private static CreateMessageOptions GetCreateMessageOptions(StartUpAlertData startUpAlertData)
