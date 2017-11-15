@@ -23,9 +23,9 @@ namespace startup_alerter
             var startUpAlertData = GetStartUpAlertData();
             log.Info("alert: " + startUpAlertData.Body);
 
-            var createMessageOptions = GetCreateMessageOptions(startUpAlertData);
-            ConfigureRestClient(startUpAlertData);
-            SendStartUpAlert(createMessageOptions);
+            var twilioCreateMessageOptions = GetTwilioCreateMessageOptions(startUpAlertData);
+            ConfigureTwilioRestClient(startUpAlertData);
+            SendStartUpAlert(twilioCreateMessageOptions);
 
             log.Info("app end");
         }
@@ -55,7 +55,7 @@ namespace startup_alerter
             return ipAddress.ToString();
         }
 
-        private static CreateMessageOptions GetCreateMessageOptions(StartUpAlertData startUpAlertData)
+        private static CreateMessageOptions GetTwilioCreateMessageOptions(StartUpAlertData startUpAlertData)
         {
             var fromNumber = new PhoneNumber(startUpAlertData.FromNumber);
             var toNumber = new PhoneNumber(startUpAlertData.ToNumber);
@@ -67,7 +67,7 @@ namespace startup_alerter
             };
         }
 
-        private static void ConfigureRestClient(StartUpAlertData startUpAlertData)
+        private static void ConfigureTwilioRestClient(StartUpAlertData startUpAlertData)
         {
             TwilioClient.Init(startUpAlertData.AccountSid, startUpAlertData.AuthToken);
         }
